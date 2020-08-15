@@ -1,105 +1,136 @@
 
-google.charts.load("current", {packages:["corechart"]});
-google.charts.setOnLoadCallback(drawChart);
-    
+//hide the results part initially
+$(document).ready(function () {
+  $("#display-results").hide();
+});
 
-function drawChart() {
-       var data = google.visualization.arrayToDataTable([
-         ['Sentiment', 'Relative score'],
-         ['Negative',     11],
-         ['Postive',      2]
-       ]);
 
-       var options = {
-         title: 'Sentiment Scores',
-         is3D: true,
-       };
+//on form input
+$('#input-text-form').submit(function (e) {
+  e.preventDefault();
+  
+ 
 
-       var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-       chart.draw(data, options);
+	//get inputs
+	var inputType = document.getElementById("input-text-options");
+	var inputText = document.getElementById("input-text");
+
+
+	//input type text
+	var textObject = {
+		"text": inputText.value
+	}
+
+
+	$.ajax({
+		url: "/analyze/text",
+		type: 'POST',
+		dataType: 'json',
+		data: textObject,
+		contentType: 'application/json',
+		mimeType: 'application/json',
+
+		success: function (response) {
+   
+      setScore(response);
+     
+		},
+		error: function (data, status, er) {
+			alert("error: " + " status: " + status + " er:" + er);
+		}
+	});
+
+	inputText.value = "";
+
+});
+
+
+
+var score = 0;
+
+//sets score according to response from the query
+function setScore(result){
+  //do stuff
+  score = result.score;
+  displayResults(result);
+  
 }
 
 
+function displayResults(result) {
 
-
-
-google.charts.load('current', {'packages':['gauge']});
+google.charts.load('current', {'packages': ['gauge']});
 google.charts.setOnLoadCallback(drawGaugeChart);
 
-function drawGaugeChart() {
+drawWordCloud(result.wordcount);
 
-  var data = google.visualization.arrayToDataTable([
-    ['Sentiment', 'Value'],
-    ['Postive', 80],
-    ['Negative', 55]
-  ]);
 
-  var options = {
-    width: 500, height: 200,
-    redFrom: 90, redTo: 100,
-    yellowFrom:75, yellowTo: 90,
-    minorTicks: 5
-  };
-
-  var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-
-  chart.draw(data, options);
-
-  setInterval(function() {
-    data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-    chart.draw(data, options);
-  }, 13000);
-  setInterval(function() {
-    data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-    chart.draw(data, options);
-  }, 5000);
-  setInterval(function() {
-    data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-    chart.draw(data, options);
-  }, 26000);
+//unhide the results
+$("#show-result").click( function(e) {
+  e.preventDefault();	   
+ $("#display-results").show();
+ });
 
 }
 
 
+//gauge-chart
+function drawGaugeChart() {
 
+	var data = google.visualization.arrayToDataTable([
+		['Sentiment', 'Value'],
+		['Score', score]
+	]);
 
+	var options = {
+		min: -1,
+		max: 1,
+		redFrom: -1,
+		redTo: 0,
+		minorTicks: 5
+	};
+
+	var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+	chart.draw(data, options);
+
+}
 
 
 //wordcloud
+function drawWordCloud(wordObjects){
 
-anychart.onDocumentReady( function(){
+  anychart.onDocumentReady(function () {
 
-  //dummy data
-  var data = [
-    {"x": "Mandarin chinese", "value": 0.9},
-    {"x": "English", "value": -0.2},
-    {"x": "Hindustani", "value": 0.1},
-    {"x": "Spanish", "value": 0.08},
-    {"x": "Arabic", "value": -0.3},
-    {"x": "Malay", "value": -0.87},
-    {"x": "Russian", "value": 0.5},
-    {"x": "Bengali", "value": 0.261},
-    {"x": "Portuguese", "value": 0.229},
-    {"x": "French", "value": -0.229},
-    {"x": "Hausa", "value": 0.150},
-    {"x": "Punjabi", "value": -0.148},
-    {"x": "Japanese", "value": 0.29},
-    {"x": "German", "value": -0.9},
-    {"x": "Persian", "value": 0.121}
-  ];
-
-  // create a tag cloud chart
-  var chart = anychart.tagCloud(data);
-
-  // set the chart title
-  chart.title('Sentiment Analysis ')
-  // set array of angles, by which words will be placed
-  chart.angles([0])
   
+    var data =[];
 
- 
-  // display chart
-  chart.container("wordcloud");
+    console.log(wordObjects);
+      
+    for(word in wordObjects){
+      wordObject = {
+        "x":word,
+        "value":wordObjects[word]
+      }
+
+      data.push(wordObject);
+    }
+
+    console.log(data);
+    // create a tag cloud chart
+    var chart = anychart.tagCloud(data);
   
-  chart.draw();
-});
+    // set the chart title
+    chart.title('Sentiment Analysis ')
+    // set array of angles, by which words will be placed
+    chart.angles([0])
+  
+  
+    // display chart
+    chart.container("wordcloud");
+  
+    chart.draw();
+  });
+
+
+}
