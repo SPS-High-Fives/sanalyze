@@ -16,7 +16,7 @@ import com.google.cloud.language.v1.Sentiment;
 import highfives.utils.NaturalLanguageAPIUtils;
 import highfives.utils.TextProcessingUtils;
 import highfives.Constants;
-
+import java.util.stream.Collectors;
 
 @WebServlet(name = "AnalyzeTextServlet", value = "/analyze/text")
 public class AnalyzeTextServlet extends HttpServlet {

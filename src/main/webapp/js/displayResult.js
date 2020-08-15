@@ -6,6 +6,35 @@ $(document).ready(function () {
 //on form input
 $('#input-text-form').submit(function (e) {
   e.preventDefault();
+  
+	//get inputs
+	var inputType = document.getElementById("input-text-options");
+	var inputText = document.getElementById("input-text");
+
+
+	//input type text
+	var textObject = {
+		"text": inputText.value
+	}
+
+
+	$.ajax({
+		url: "/analyze/text",
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify(textObject),
+		contentType: 'application/json',
+		mimeType: 'application/json',
+
+		success: function (response) {
+   
+            setScore(response);
+     
+		},
+		error: function (data, status, er) {
+			alert("error: " + " status: " + status + " er:" + er);
+		}
+	});
 
   //get inputs
   var inputType = $('#input-text-options').val();
