@@ -3,6 +3,7 @@ package highfives.servlets;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +25,9 @@ public class AnalyzeTextServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException {
 
-        String text = request.getParameter(Constants.ANALYZE_TEXT);
+        // Get POST request body as JSON
+        JSONObject requestBody = new JSONObject(request.getReader().lines().collect(Collectors.joining()));
+        String text = (String) requestBody.get(Constants.ANALYZE_TEXT);
 
         // If length of the text exceeds the limit, send bad request (400)
         if(text.length() > Constants.TEXT_MAX_LENGTH) {

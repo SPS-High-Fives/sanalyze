@@ -26,13 +26,13 @@ $('#input-text-form').submit(function (e) {
 		url: "/analyze/text",
 		type: 'POST',
 		dataType: 'json',
-		data: textObject,
+		data: JSON.stringify(textObject),
 		contentType: 'application/json',
 		mimeType: 'application/json',
 
 		success: function (response) {
    
-      setScore(response);
+            setScore(response);
      
 		},
 		error: function (data, status, er) {
