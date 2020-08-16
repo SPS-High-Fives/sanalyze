@@ -93,6 +93,10 @@ function drawWordCloud(wordObjects){
     }
 
     console.log(data);
+
+    var chartContainer = document.getElementById('wordcloud');
+    chartContainer.innerHTML = '';
+
     // create a tag cloud chart
     var chart = anychart.tagCloud(data);
   
