@@ -27,13 +27,13 @@ body {
 
 
 .header{
-	background-color: #71C2F7;
-	height: 3.5rem;
+  background-color: #71C2F7;
+  height: 3.5rem;
 }
 
 .userlink{
-	color: #FFF;
-	font-size: 1.5rem;
+  color: #FFF;
+  font-size: 1.5rem;
 }
 
 nav a:hover

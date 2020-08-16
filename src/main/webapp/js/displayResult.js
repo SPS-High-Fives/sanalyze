@@ -8,12 +8,50 @@ $('#input-text-form').submit(function (e) {
   e.preventDefault();
 
   //get inputs
-  var inputType = document.getElementById("input-text-options");
-  var inputText = document.getElementById("input-text");
+  var inputType = $('#input-text-options').val();
+  
+  switch(inputType) {
+    case "text":
+      var inputTextElement = document.getElementById("input-text");
+      analyzeText(inputTextElement.value);
+      inputTextElement.value = "";
+      break;
 
+    case "file":
+      console.log('Reading file');
+      var fileSelectorElement = document.getElementById("file-selector");
+      if (fileSelectorElement.files.length == 0) {
+        alert("No file selected");
+      } else {
+        readText(fileSelectorElement.files[0]);
+        fileSelectorElement.value = "";
+      }
+      break;
+  }
+
+});
+
+function readText(file) {
+  //Check for .txt file
+  if (file.name.split('.').pop().toLowerCase() != "txt") {
+    console.log('Not a text file.', file.type, file);
+    alert("Error: Invalid file");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.addEventListener('load', (event) => {
+    var contents = reader.result;
+    console.log(contents);
+    analyzeText(contents);
+  });
+  reader.readAsText(file);
+}
+
+function analyzeText(inputText) {
   //input type text
   var textObject = {
-    "text": inputText.value
+    "text": inputText
   }
   
   $.ajax({
@@ -32,10 +70,7 @@ $('#input-text-form').submit(function (e) {
 	  alert("error: " + " status: " + status + " er:" + er);
 	}
   });
-
-  inputText.value = "";
-
-});
+}
 
 var score = 0;
 
@@ -57,7 +92,6 @@ function displayResults(result) {
   $("#display-results").show();
 }
 
-
 //gauge-chart
 function drawGaugeChart() {
   var data = google.visualization.arrayToDataTable([
@@ -76,7 +110,6 @@ function drawGaugeChart() {
   var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
   chart.draw(data, options);
 }
-
 
 //wordcloud
 function drawWordCloud(wordObjects){
