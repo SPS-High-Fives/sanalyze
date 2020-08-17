@@ -14,7 +14,6 @@ body {
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }
 
-
 .card .card-title {
   margin-bottom: 2rem;
   font-weight: 300;
@@ -25,18 +24,16 @@ body {
   padding: 2rem;
 }
 
-
-.header{
-	background-color: #71C2F7;
-	height: 3.5rem;
+.header {
+  background-color: #71C2F7;
+  height: 3.5rem;
 }
 
-.userlink{
-	color: #FFF;
-	font-size: 1.5rem;
+.userlink {
+  color: #FFF;
+  font-size: 1.5rem;
 }
 
-nav a:hover
-{
-	color: #565656;
+nav a:hover {
+  color: #565656;
 }
