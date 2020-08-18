@@ -1,5 +1,8 @@
 package highfives.utils;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
 import com.google.cloud.language.v1.AnalyzeEntitySentimentRequest;
@@ -13,8 +16,6 @@ import com.google.cloud.language.v1.EntityMention;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.cloud.language.v1.Token;
-import java.util.List;
-import java.util.Map;
 
 
 // Class containing functions that make Natural Language API calls
