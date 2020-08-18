@@ -49,7 +49,11 @@ function readText(file) {
 }
 
 function analyzeText(inputText) {
-  //input type text
+  if (inputText.length == 0) {
+      alert("Enter text to be analyzed");
+      return;
+  }
+        
   var textObject = {
     "text": inputText
   }
@@ -64,10 +68,11 @@ function analyzeText(inputText) {
 
 	success: function (response) {
       setScore(response);
+      document.title = "Your Results are here!";
     },
 	
-    error: function (data, status, er) {
-	  alert("error: " + " status: " + status + " er:" + er);
+    error: function (xhr, status, er) {
+	  alert("Error: " + xhr.responseText);
 	}
   });
 }

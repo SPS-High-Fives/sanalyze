@@ -37,13 +37,15 @@ public class AnalyzeTextServlet extends HttpServlet {
                         .append("Length of text to be processed should not exceed ")
                         .append(Constants.TEXT_MAX_LENGTH)
                         .append(" characters.")).toString();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, errorMessage);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println(errorMessage);
             return;
         }
 
         // If length of the text is 0, send bad request (400)
         if(text.length() == 0) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Text cannot be empty.");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("Text cannot be empty.");
             return;
         }
 
@@ -78,7 +80,8 @@ public class AnalyzeTextServlet extends HttpServlet {
 
         } catch (Exception e) {
             //Some issue while processing, send internal server error (500)
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().println("Processing error. Please try again.");
             e.printStackTrace();
             return;
         }
