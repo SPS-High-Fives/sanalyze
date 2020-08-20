@@ -29,11 +29,11 @@ body {
   height: 3.5rem;
 }
 
-.userlink {
-  color: #FFF;
-  font-size: 1.5rem;
-}
-
 nav a:hover {
   color: #565656;
+}
+
+.collapse .navbar-collapse{
+  padding: 2em;
+
 }
