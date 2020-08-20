@@ -1,6 +1,7 @@
 //hide the results part initially
 $(document).ready(function () {
   $("#display-results").hide();
+  $('#loading').hide(); 
 });
 
 //on form input
@@ -48,6 +49,16 @@ function readText(file) {
   reader.readAsText(file);
 }
 
+//display loading gif till response is recieved
+$(document).ajaxStart(function () {
+  $('#loading').show();  
+});
+
+$(document).ajaxStop(function() {
+  $('#loading').hide();  
+});
+
+
 function analyzeText(inputText) {
   if (inputText.length == 0) {
       alert("Enter text to be analyzed");
@@ -76,6 +87,9 @@ function analyzeText(inputText) {
 	}
   });
 }
+
+
+
 
 var score = 0;
 
