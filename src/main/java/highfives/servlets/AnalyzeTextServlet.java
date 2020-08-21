@@ -143,26 +143,32 @@ public class AnalyzeTextServlet extends HttpServlet {
     // creates users whenever required.
     private boolean checkUsage(String ipAddress, int requiredUnits) {
 
-        // If user exists, check whether user has enough units, and isn't making too many calls
-        if(UsageUtils.checkClientExists(ipAddress)) {
+        try {
+            // If user exists, check whether user has enough units, and isn't making too many calls
+            if(UsageUtils.checkClientExists(ipAddress)) {
 
-            UserUsage usage = UsageUtils.getUserUsage(ipAddress);
-            long duration  = (new Date()).getTime() - usage.getLastCalled().getTime();
-            long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+                UserUsage usage = UsageUtils.getUserUsage(ipAddress);
+                long duration  = (new Date()).getTime() - usage.getLastCalled().getTime();
+                long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
 
-            // Temporarily solution for resetting usage (after 30 days of previous reset)
-            long durationSinceReset  = (new Date()).getTime() - usage.getLastReset().getTime();
-            if(TimeUnit.MILLISECONDS.toDays(durationSinceReset) >= Constants.RESET_DAYS)
-            {
-                UsageUtils.resetUsageUnits(ipAddress);
-                return true;
+                // Temporarily solution for resetting usage (after 30 days of previous reset)
+                long durationSinceReset  = (new Date()).getTime() - usage.getLastReset().getTime();
+                if(TimeUnit.MILLISECONDS.toDays(durationSinceReset) >= Constants.RESET_DAYS)
+                {
+                    UsageUtils.resetUsageUnits(ipAddress);
+                    return true;
+                }
+
+                return (usage.getUnits() >= requiredUnits) && (diffInSeconds >= Constants.CALLS_GAP);
             }
 
-            return (usage.getUnits() >= requiredUnits) && (diffInSeconds >= Constants.CALLS_GAP);
+            // else, create an entry for the user
+            UsageUtils.createUsageEntry(ipAddress);
+            return true;
+    
+        } catch (Exception e) {
+            e.printStackTrace
+            return false;
         }
-
-        // else, create an entry for the user
-        UsageUtils.createUsageEntry(ipAddress);
-        return true;
     }
 }
