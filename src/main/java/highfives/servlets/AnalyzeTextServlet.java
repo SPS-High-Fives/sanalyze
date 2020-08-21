@@ -167,7 +167,7 @@ public class AnalyzeTextServlet extends HttpServlet {
             return true;
     
         } catch (Exception e) {
-            e.printStackTrace
+            e.printStackTrace();
             return false;
         }
     }

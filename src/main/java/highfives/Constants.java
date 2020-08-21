@@ -4,13 +4,13 @@ package highfives;
 //Class to store constants
 public final class Constants {
 
-    public static final String DATABASE_NAME = "<DATABASE_NAME>";
+    public static final String DATABASE_NAME = System.getenv("DATABASE_NAME");
 
-    public static final String INSTANCE_CONNECTION_NAME = "<INSTANCE_CONNECTION_NAME>";
+    public static final String INSTANCE_CONNECTION_NAME = System.getenv("INSTANCE_CONNECTION_NAME");
 
-    public static final String MYSQL_USER_NAME = "<MYSQL_USER_NAME>";
+    public static final String MYSQL_USER_NAME = System.getenv("MYSQL_USER_NAME");
 
-    public static final String MYSQL_USER_PASSWORD = "<MYSQL_USER_PASSWORD>";
+    public static final String MYSQL_USER_PASSWORD = System.getenv("MYSQL_USER_PASSWORD");
 
     public static final String JDBC_URL = ((new StringBuilder())
                         .append("jdbc:mysql:///")
