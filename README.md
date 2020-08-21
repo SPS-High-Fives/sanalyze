@@ -45,6 +45,14 @@ CREATE TABLE api_usage(
 - Fill in the variables templated in `Constants.java`.
 - Build drivers by running `mvn -P jar-with-dependencies clean package -DskipTests`.
 
+### Database Credentials
+
+- If the creds are in a file name named `databasevars.env`, run,
+
+`
+source databasevars.env
+`
+
 ## Maven
 ### Running locally
 
