@@ -42,6 +42,7 @@ public final class DatastoreUtils {
             return analysis;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }        
     }
@@ -60,7 +61,9 @@ public final class DatastoreUtils {
         try {
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(analysisEntity);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return analysis;
     }
