@@ -74,17 +74,19 @@ public class AnalyzeTextServlet extends HttpServlet {
             Sentiment sentiment = NaturalLanguageAPIUtils.analyzeSentimentText(text);
             List<Entity> entities = NaturalLanguageAPIUtils.entitySentimentText(text);
 
-            // Get entities and their sentiment scores
-            JSONObject entitiesJson = new JSONObject();
+            // Get entities, and their sentiment and salience scores
+            JSONObject sentimentsJson = new JSONObject();
+            JSONObject salienceJson = new JSONObject();
             for (Entity entity: entities) {
-                entitiesJson.put(entity.getName(), entity.getSentiment().getScore());
+                sentimentsJson.put(entity.getName(), entity.getSentiment().getScore());
+                salienceJson.put(entity.getName(), entity.getSalience());
             }
 
             // Get word frequency
             Map<String, Integer> wordFrequencies = TextProcessingUtils.textToFrequencyMap(text);
             JSONObject wordFrequenciesJson = new JSONObject(wordFrequencies);
 
-            analysis = DatastoreUtils.saveAnalysis(text, sentiment.getScore(), entitiesJson, wordFrequenciesJson);
+            analysis = DatastoreUtils.saveAnalysis(text, sentiment.getScore(), sentimentsJson, salienceJson, wordFrequenciesJson);
 
             UsageUtils.updateUsageUnits(ipAddress, requiredUnits);
 

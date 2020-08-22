@@ -32,6 +32,8 @@ public final class Constants {
 
     public static final String ENTITY_SENTIMENTS = "entities";
 
+    public static final String ENTITY_SALIENCES = "saliences";
+
     public static final String WORD_FREQUENCIES = "wordcount";
 
     public static final String RESULT = "result";
