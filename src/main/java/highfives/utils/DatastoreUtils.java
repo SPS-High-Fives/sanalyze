@@ -48,10 +48,10 @@ public final class DatastoreUtils {
     }
 
     // Save analysis for the given text
-    public static AnalysisResult saveAnalysis(String text, float sentiment, JSONObject entitySentiments, JSONObject wordFrequencies)
+    public static AnalysisResult saveAnalysis(String text, float sentiment, JSONObject entitySentiments, JSONObject entitySaliences, JSONObject wordFrequencies)
     {
         // Construct Analysis object from data
-        AnalysisResult analysis = new AnalysisResult(0, text, sentiment, entitySentiments, wordFrequencies);
+        AnalysisResult analysis = new AnalysisResult(0, text, sentiment, entitySentiments, entitySaliences, wordFrequencies);
 
         // Upload data to datastore
         Entity analysisEntity = new Entity(Constants._ANALYSIS);
