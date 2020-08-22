@@ -1,9 +1,3 @@
-//hide the results part initially
-$(document).ready(function () {
-  $("#display-results").hide();
-  $('#loading').hide(); 
-});
-
 //on form input
 $('#input-text-form').submit(function (e) {
   e.preventDefault();

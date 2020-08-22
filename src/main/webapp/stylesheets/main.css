@@ -37,3 +37,7 @@ nav a:hover {
   padding: 2em;
 
 }
+
+#loading,#display-results{
+    display: none;
+}
