@@ -1,3 +1,9 @@
+//hide the results part initially
+$(document).ready(function () {
+  $("#display-results").hide();
+  google.charts.load('current', {'packages': ['gauge', 'corechart', 'bar']});
+});
+
 //on form input
 $('#input-text-form').submit(function (e) {
   e.preventDefault();
@@ -83,22 +89,16 @@ function analyzeText(inputText) {
   });
 }
 
-
-
-
-var score = 0;
-
 //sets score according to response from the query
 function setScore(result){
   //do stuff
-  score = result.score;
   displayResults(result); 
 }
 
 
 function displayResults(result) {
-  google.charts.load('current', {'packages': ['gauge']});
-  google.charts.setOnLoadCallback(drawGaugeChart);
+	drawGaugeChart(result.score);
+	drawEntitiesBarChart(result.entities);
 
   drawWordCloud(result.wordcount, "wordcloud");
   drawWordCloud(result.saliences, "salience_wordcloud");
@@ -108,22 +108,68 @@ function displayResults(result) {
 }
 
 //gauge-chart
-function drawGaugeChart() {
+function drawGaugeChart(score) {
   var data = google.visualization.arrayToDataTable([
     ['Sentiment', 'Value'],
-	['Score', score]
+		['Score', score]
   ]);
 
   var options = {
     min: -1,
-	max: 1,
-	redFrom: -1,
-	redTo: 0,
-	minorTicks: 5
+		max: 1,
+		redFrom: -1,
+		redTo: 0,
+		minorTicks: 5
   };
 
   var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
   chart.draw(data, options);
+}
+
+function drawEntitiesBarChart(entity_sentiments) {
+
+	var entities = Object.keys(entity_sentiments);
+
+	if(entities.length > 0) {
+		var entity_sentiments_bar = [['Entity', 'Sentiment']];
+		entities.forEach(entity => {
+			entity_sentiments_bar.push([entity, entity_sentiments[entity]]);
+		});
+
+		var data = google.visualization.arrayToDataTable(entity_sentiments_bar);
+
+		var options = {
+			title: 'Entity - Sentiments',
+			chartArea: {width: '50%'},
+			hAxis: {
+				title: 'Sentiment',
+				minValue: -1,
+				textStyle: {
+					bold: true,
+					fontSize: 12,
+				},
+				titleTextStyle: {
+					bold: true,
+					fontSize: 18,
+				}
+			},
+			vAxis: {
+				title: 'Entity',
+				textStyle: {
+					fontSize: 14,
+					bold: true,
+				},
+				titleTextStyle: {
+					fontSize: 14,
+					bold: true,
+				}
+			}
+		};
+		var chart = new google.visualization.BarChart(document.getElementById('entities_div'));
+		chart.draw(data, options);
+	} else {
+		document.getElementById('entities_div').textContent = "No entities found."
+	}
 }
 
 //wordcloud
