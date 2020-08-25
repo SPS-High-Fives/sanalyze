@@ -14,44 +14,9 @@ detailed instructions.
 
 ## Setup
 
-`
-gcloud init
-gcloud auth application-default login
-`
 - Download your service account credentials as a `json`, and upload it to the shell.
 - Set its path in the environment variable `GOOGLE_APPLICATION_CREDENTIALS`.
-
-### Database Setup
-
-- Create a Cloud SQL instance through the Google Cloud interface.
-- After creation, start it up by clicking 'Connect using Cloud Shell' in the instance' page.
-- After the shell starts up, enter the following SQL commands to setup a database for this project.
-`
-CREATE DATABASE sanalyze;
-
-USE sanalyze;
-
-CREATE TABLE api_usage(
-    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    clientid VARCHAR(50), 
-    units INT(4),
-    last_called TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_reset TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-`
-
-### JDBC Setup
-
-- Fill in the variables templated in `Constants.java`.
-- Build drivers by running `mvn -P jar-with-dependencies clean package -DskipTests`.
-
-### Database Credentials
-
-- If the creds are in a file name named `databasevars.env`, run,
-
-`
-source databasevars.env
-`
+- Fill in database credentials in `Constants.java`.
 
 ## Maven
 ### Running locally
