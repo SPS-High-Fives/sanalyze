@@ -74,6 +74,7 @@ function analyzeText(inputText) {
 	success: function (response) {
       setScore(response);
       document.title = "Your Results are here!";
+			document.getElementById("input_text_div").textContent = inputText;
     },
 	
     error: function (xhr, status, er) {
@@ -99,7 +100,8 @@ function displayResults(result) {
   google.charts.load('current', {'packages': ['gauge']});
   google.charts.setOnLoadCallback(drawGaugeChart);
 
-  drawWordCloud(result.wordcount);
+  drawWordCloud(result.wordcount, "wordcloud");
+  drawWordCloud(result.saliences, "salience_wordcloud");
 
   //unhide the results
   $("#display-results").show();
@@ -125,7 +127,7 @@ function drawGaugeChart() {
 }
 
 //wordcloud
-function drawWordCloud(wordObjects){
+function drawWordCloud(wordObjects, divname){
   anychart.onDocumentReady(function () {
     var data =[];
     console.log(wordObjects);
@@ -140,7 +142,7 @@ function drawWordCloud(wordObjects){
 
     console.log(data);
 
-    var chartContainer = document.getElementById('wordcloud');
+    var chartContainer = document.getElementById(divname);
     chartContainer.innerHTML = '';
 
     // create a tag cloud chart
@@ -151,7 +153,7 @@ function drawWordCloud(wordObjects){
     // set array of angles, by which words will be placed
     chart.angles([0])
     // display chart
-    chart.container("wordcloud");
+    chart.container(divname);
     chart.draw();
   });
 
