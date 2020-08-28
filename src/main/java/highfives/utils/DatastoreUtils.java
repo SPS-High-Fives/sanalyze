@@ -11,6 +11,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
 
 import highfives.data.AnalysisResult;
 import highfives.Constants;
@@ -55,8 +56,8 @@ public final class DatastoreUtils {
 
         // Upload data to datastore
         Entity analysisEntity = new Entity(Constants._ANALYSIS);
-        analysisEntity.setProperty(Constants.ANALYZE_TEXT, text);
-        analysisEntity.setProperty(Constants.RESULT, analysis.getResult());
+        analysisEntity.setProperty(Constants.ANALYZE_TEXT, new Text(text));
+        analysisEntity.setProperty(Constants.RESULT, new Text(analysis.getResult()));
 
         try {
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
