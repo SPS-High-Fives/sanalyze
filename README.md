@@ -14,8 +14,9 @@ detailed instructions.
 
 ## Setup
 
-    gcloud init
-    gcloud auth application-default login
+- Download your service account credentials as a `json`, and upload it to the shell.
+- Set its path in the environment variable `GOOGLE_APPLICATION_CREDENTIALS`.
+- Fill in database credentials in `Constants.java`.
 
 ## Maven
 ### Running locally

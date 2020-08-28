@@ -1,0 +1,70 @@
+.dropdown {
+	color: #FFF;
+	background-color: #6DC4F9;
+	height: 2.5rem;
+	width: 7.5rem;
+	padding: 0;
+	border-radius: 0;
+}
+
+#input-text-options {
+    display: block;
+    position: relative;
+    background-color: #D2D7D9;
+    height: 2.5rem;
+	width: 7.5rem;
+}
+
+.search {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	height: 30rem;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 {
+	font-size: 4rem;
+	font-weight: 400;
+	color: black;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 4rem;
+}
+
+#input-text {
+	height: 2.5rem;
+	width: 30rem;
+}
+
+#file-selector {
+    margin-left: 4rem;
+}
+
+.submit {
+	color: #FFF;
+	background-color: #3985B3;
+	border-color: #3985B3;
+	height: 2.5rem;
+	width: 7.5rem;
+	border-radius: 0;
+}
+
+.query {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.icons {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
